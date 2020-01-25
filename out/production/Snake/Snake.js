@@ -6,13 +6,13 @@ var Snake = function (_, Kotlin) {
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var Unit = Kotlin.kotlin.Unit;
   var throwCCE = Kotlin.throwCCE;
-  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var equals = Kotlin.equals;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   function Game(context) {
     Game$Companion_getInstance();
     this.context_0 = context;
     this.state = '';
+    this.head_0 = new Head(this.context_0);
     this.timer_0 = 0;
     window.addEventListener('keydown', Game_init$lambda(this));
     window.addEventListener('keyup', Game_init$lambda_0(this));
@@ -54,7 +54,7 @@ var Snake = function (_, Kotlin) {
     if (this.timer_0 === 0) {
       this.stop_0();
       this.state = Game$Companion_getInstance().PLAYING;
-      this.timer_0 = window.setInterval(Game$start$lambda(this), 5);
+      this.timer_0 = window.setInterval(Game$start$lambda(this), 100);
     }
   };
   Game.prototype.stop_0 = function () {
@@ -69,36 +69,22 @@ var Snake = function (_, Kotlin) {
     this.draw_0();
   };
   Game.prototype.update_0 = function () {
+    this.head_0.update();
   };
   Game.prototype.draw_0 = function () {
+    this.head_0.draw();
   };
   Game.prototype.onKeyDown_0 = function (event) {
     var tmp$;
     var keyboardEvent = Kotlin.isType(tmp$ = event, KeyboardEvent) ? tmp$ : throwCCE();
-    switch (keyboardEvent.keyCode) {
-      case 37:
-        println('left');
-        break;
-      case 39:
-        println('right');
-        break;
-    }
+    this.head_0.changeDirection_za3lpa$(keyboardEvent.keyCode);
   };
   Game.prototype.onKeyUp_0 = function (event) {
     var tmp$;
     var keyboardEvent = Kotlin.isType(tmp$ = event, KeyboardEvent) ? tmp$ : throwCCE();
-    switch (keyboardEvent.keyCode) {
-      case 37:
-        println('left up');
-        break;
-      case 39:
-        println('right up');
-        break;
-      case 32:
-        if (equals(this.state, Game$Companion_getInstance().INTRO))
-          this.start_0();
-        break;
-    }
+    if (keyboardEvent.keyCode === 32)
+      if (equals(this.state, Game$Companion_getInstance().INTRO))
+        this.start_0();
   };
   function Game_init$lambda(this$Game) {
     return function (it) {
@@ -117,18 +103,103 @@ var Snake = function (_, Kotlin) {
     simpleName: 'Game',
     interfaces: []
   };
+  function Head(context) {
+    Head$Companion_getInstance();
+    this.context_0 = context;
+    this.width_0 = 10.0;
+    this.height_0 = 10.0;
+    this.speed_0 = 10;
+    this.x_0 = 0.0;
+    this.y_0 = 0.0;
+    this.direction_0 = Head$Companion_getInstance().RIGHT;
+  }
+  function Head$Companion() {
+    Head$Companion_instance = this;
+    this.UP = 'up';
+    this.DOWN = 'down';
+    this.RIGHT = 'right';
+    this.LEFT = 'left';
+  }
+  Head$Companion.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'Companion',
+    interfaces: []
+  };
+  var Head$Companion_instance = null;
+  function Head$Companion_getInstance() {
+    if (Head$Companion_instance === null) {
+      new Head$Companion();
+    }
+    return Head$Companion_instance;
+  }
+  Head.prototype.changeDirection_za3lpa$ = function (keyCode) {
+    switch (keyCode) {
+      case 37:
+        if (!equals(this.direction_0, Head$Companion_getInstance().RIGHT))
+          this.direction_0 = Head$Companion_getInstance().LEFT;
+        break;
+      case 38:
+        if (!equals(this.direction_0, Head$Companion_getInstance().DOWN))
+          this.direction_0 = Head$Companion_getInstance().UP;
+        break;
+      case 39:
+        if (!equals(this.direction_0, Head$Companion_getInstance().LEFT))
+          this.direction_0 = Head$Companion_getInstance().RIGHT;
+        break;
+      case 40:
+        if (!equals(this.direction_0, Head$Companion_getInstance().UP))
+          this.direction_0 = Head$Companion_getInstance().DOWN;
+        break;
+    }
+  };
+  Head.prototype.update = function () {
+    switch (this.direction_0) {
+      case 'left':
+        this.x_0 -= this.speed_0;
+        break;
+      case 'up':
+        this.y_0 -= this.speed_0;
+        break;
+      case 'right':
+        this.x_0 += this.speed_0;
+        break;
+      case 'down':
+        this.y_0 += this.speed_0;
+        break;
+    }
+    if (this.x_0 < 0)
+      this.x_0 = GAME_WIDTH - this.width_0;
+    else if (this.x_0 > GAME_WIDTH)
+      this.x_0 = 0.0;
+    if (this.y_0 < 0)
+      this.y_0 = GAME_HEIGHT - this.height_0;
+    else if (this.y_0 > GAME_HEIGHT)
+      this.y_0 = 0.0;
+  };
+  Head.prototype.draw = function () {
+    this.context_0.fillRect(this.x_0, this.y_0, this.width_0, this.height_0);
+  };
+  Head.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Head',
+    interfaces: []
+  };
   var GAME_WIDTH;
   var GAME_HEIGHT;
   function main() {
     var tmp$, tmp$_0;
     var canvas = Kotlin.isType(tmp$ = document.getElementById('canvas'), HTMLCanvasElement) ? tmp$ : throwCCE();
     var context = Kotlin.isType(tmp$_0 = canvas.getContext('2d'), CanvasRenderingContext2D) ? tmp$_0 : throwCCE();
-    var game = new Game(context);
+    new Game(context);
   }
   Object.defineProperty(Game, 'Companion', {
     get: Game$Companion_getInstance
   });
   _.Game = Game;
+  Object.defineProperty(Head, 'Companion', {
+    get: Head$Companion_getInstance
+  });
+  _.Head = Head;
   Object.defineProperty(_, 'GAME_WIDTH', {
     get: function () {
       return GAME_WIDTH;

@@ -14,6 +14,7 @@ class Game(private val context: CanvasRenderingContext2D) {
     }
 
     var state = ""
+    private val head = Head(context)
     private var timer: Int = 0
 
     init {
@@ -40,7 +41,7 @@ class Game(private val context: CanvasRenderingContext2D) {
         if (timer == 0) {
             stop()
             state = PLAYING
-            timer = window.setInterval({ loop() }, 5)
+            timer = window.setInterval({ loop() }, 100)
             //loop()
         }
     }
@@ -61,26 +62,28 @@ class Game(private val context: CanvasRenderingContext2D) {
     }
 
     private fun update() {
-
+        head.update()
     }
 
     private fun draw() {
-
+        head.draw()
     }
 
     private fun onKeyDown(event: Event) {
         val keyboardEvent = event as KeyboardEvent
+        head.changeDirection(keyboardEvent.keyCode)
+        /*println(keyboardEvent.keyCode)
         when (keyboardEvent.keyCode) {
             37 -> println("left")
             39 -> println("right")
-        }
+        }*/
     }
 
     private fun onKeyUp(event: Event) {
         val keyboardEvent = event as KeyboardEvent
         when (keyboardEvent.keyCode) {
-            37 -> println("left up")
-            39 -> println("right up")
+            //37 -> println("left up")
+            //39 -> println("right up")
             32 -> if (state == INTRO) start()
         }
     }
