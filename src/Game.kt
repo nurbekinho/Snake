@@ -41,7 +41,7 @@ class Game(private val context: CanvasRenderingContext2D) {
         if (timer == 0) {
             stop()
             state = PLAYING
-            timer = window.setInterval({ loop() }, 100)
+            timer = window.setInterval({ loop() }, 500)
             //loop()
         }
     }

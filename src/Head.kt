@@ -1,6 +1,4 @@
-import org.w3c.dom.CanvasDirection
 import org.w3c.dom.CanvasRenderingContext2D
-
 
 class Head(private val context: CanvasRenderingContext2D) {
     companion object {
@@ -8,11 +6,10 @@ class Head(private val context: CanvasRenderingContext2D) {
         const val DOWN = "down"
         const val RIGHT = "right"
         const val LEFT = "left"
+        const val SIZE = 20.0
     }
 
-    private val width = 10.0
-    private val height = 10.0
-    private val speed = 10
+    private val speed = SIZE
     private var x = 0.0
     private var y = 0.0
     private var direction = RIGHT
@@ -34,14 +31,14 @@ class Head(private val context: CanvasRenderingContext2D) {
             DOWN -> y += speed
         }
 
-        if (x < 0) x = GAME_WIDTH - width
+        if (x < 0) x = GAME_WIDTH - SIZE
         else if (x > GAME_WIDTH) x = 0.0
 
-        if (y < 0) y = GAME_HEIGHT - height
+        if (y < 0) y = GAME_HEIGHT - SIZE
         else if (y > GAME_HEIGHT) y = 0.0
     }
 
     fun draw() {
-        context.fillRect(x, y, width, height)
+        context.fillRect(x, y, SIZE, SIZE)
     }
 }

@@ -3,11 +3,24 @@ if (typeof kotlin === 'undefined') {
 }
 var Snake = function (_, Kotlin) {
   'use strict';
+  var Kind_CLASS = Kotlin.Kind.CLASS;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var Unit = Kotlin.kotlin.Unit;
   var throwCCE = Kotlin.throwCCE;
   var equals = Kotlin.equals;
-  var Kind_CLASS = Kotlin.Kind.CLASS;
+  function Body(context) {
+    this.context_0 = context;
+    this.x = 0.0;
+    this.y = 0.0;
+  }
+  Body.prototype.draw = function () {
+    this.context_0.fillRect(this.x, this.y, Head$Companion_getInstance().SIZE, Head$Companion_getInstance().SIZE);
+  };
+  Body.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Body',
+    interfaces: []
+  };
   function Game(context) {
     Game$Companion_getInstance();
     this.context_0 = context;
@@ -54,7 +67,7 @@ var Snake = function (_, Kotlin) {
     if (this.timer_0 === 0) {
       this.stop_0();
       this.state = Game$Companion_getInstance().PLAYING;
-      this.timer_0 = window.setInterval(Game$start$lambda(this), 100);
+      this.timer_0 = window.setInterval(Game$start$lambda(this), 500);
     }
   };
   Game.prototype.stop_0 = function () {
@@ -106,9 +119,7 @@ var Snake = function (_, Kotlin) {
   function Head(context) {
     Head$Companion_getInstance();
     this.context_0 = context;
-    this.width_0 = 10.0;
-    this.height_0 = 10.0;
-    this.speed_0 = 10;
+    this.speed_0 = Head$Companion_getInstance().SIZE;
     this.x_0 = 0.0;
     this.y_0 = 0.0;
     this.direction_0 = Head$Companion_getInstance().RIGHT;
@@ -119,6 +130,7 @@ var Snake = function (_, Kotlin) {
     this.DOWN = 'down';
     this.RIGHT = 'right';
     this.LEFT = 'left';
+    this.SIZE = 20.0;
   }
   Head$Companion.$metadata$ = {
     kind: Kind_OBJECT,
@@ -168,16 +180,16 @@ var Snake = function (_, Kotlin) {
         break;
     }
     if (this.x_0 < 0)
-      this.x_0 = GAME_WIDTH - this.width_0;
+      this.x_0 = GAME_WIDTH - Head$Companion_getInstance().SIZE;
     else if (this.x_0 > GAME_WIDTH)
       this.x_0 = 0.0;
     if (this.y_0 < 0)
-      this.y_0 = GAME_HEIGHT - this.height_0;
+      this.y_0 = GAME_HEIGHT - Head$Companion_getInstance().SIZE;
     else if (this.y_0 > GAME_HEIGHT)
       this.y_0 = 0.0;
   };
   Head.prototype.draw = function () {
-    this.context_0.fillRect(this.x_0, this.y_0, this.width_0, this.height_0);
+    this.context_0.fillRect(this.x_0, this.y_0, Head$Companion_getInstance().SIZE, Head$Companion_getInstance().SIZE);
   };
   Head.$metadata$ = {
     kind: Kind_CLASS,
@@ -192,6 +204,7 @@ var Snake = function (_, Kotlin) {
     var context = Kotlin.isType(tmp$_0 = canvas.getContext('2d'), CanvasRenderingContext2D) ? tmp$_0 : throwCCE();
     new Game(context);
   }
+  _.Body = Body;
   Object.defineProperty(Game, 'Companion', {
     get: Game$Companion_getInstance
   });
