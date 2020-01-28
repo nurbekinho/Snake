@@ -35,7 +35,7 @@ class Head(private val context: CanvasRenderingContext2D) {
         else if (x > GAME_WIDTH) x = 0.0
 
         if (y < 0) y = GAME_HEIGHT - SIZE
-        else if (y > GAME_HEIGHT) y = 0.0
+        else if (y > GAME_HEIGHT - SIZE) y = 0.0
     }
 
     fun draw() {

@@ -25,6 +25,7 @@ var Snake = function (_, Kotlin) {
     Game$Companion_getInstance();
     this.context_0 = context;
     this.state = '';
+    this.isLooped_0 = false;
     this.head_0 = new Head(this.context_0);
     this.timer_0 = 0;
     window.addEventListener('keydown', Game_init$lambda(this));
@@ -80,6 +81,7 @@ var Snake = function (_, Kotlin) {
     this.context_0.clearRect(0.0, 0.0, GAME_WIDTH, GAME_HEIGHT);
     this.update_0();
     this.draw_0();
+    this.isLooped_0 = true;
   };
   Game.prototype.update_0 = function () {
     this.head_0.update();
@@ -90,7 +92,9 @@ var Snake = function (_, Kotlin) {
   Game.prototype.onKeyDown_0 = function (event) {
     var tmp$;
     var keyboardEvent = Kotlin.isType(tmp$ = event, KeyboardEvent) ? tmp$ : throwCCE();
-    this.head_0.changeDirection_za3lpa$(keyboardEvent.keyCode);
+    if (this.isLooped_0)
+      this.head_0.changeDirection_za3lpa$(keyboardEvent.keyCode);
+    this.isLooped_0 = false;
   };
   Game.prototype.onKeyUp_0 = function (event) {
     var tmp$;
@@ -185,7 +189,7 @@ var Snake = function (_, Kotlin) {
       this.x_0 = 0.0;
     if (this.y_0 < 0)
       this.y_0 = GAME_HEIGHT - Head$Companion_getInstance().SIZE;
-    else if (this.y_0 > GAME_HEIGHT)
+    else if (this.y_0 > GAME_HEIGHT - Head$Companion_getInstance().SIZE)
       this.y_0 = 0.0;
   };
   Head.prototype.draw = function () {

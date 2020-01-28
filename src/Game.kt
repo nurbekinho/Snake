@@ -14,6 +14,7 @@ class Game(private val context: CanvasRenderingContext2D) {
     }
 
     var state = ""
+    private var isLooped = false
     private val head = Head(context)
     private var timer: Int = 0
 
@@ -58,6 +59,7 @@ class Game(private val context: CanvasRenderingContext2D) {
         update()
         draw()
 
+        isLooped = true
         //window.requestAnimationFrame { run { loop() } }
     }
 
@@ -71,7 +73,8 @@ class Game(private val context: CanvasRenderingContext2D) {
 
     private fun onKeyDown(event: Event) {
         val keyboardEvent = event as KeyboardEvent
-        head.changeDirection(keyboardEvent.keyCode)
+        if (isLooped) head.changeDirection(keyboardEvent.keyCode)
+        isLooped = false
         /*println(keyboardEvent.keyCode)
         when (keyboardEvent.keyCode) {
             37 -> println("left")
