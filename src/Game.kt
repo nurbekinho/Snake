@@ -16,6 +16,7 @@ class Game(private val context: CanvasRenderingContext2D) {
     var state = ""
     private var isLooped = false
     private val head = Head(context)
+    private var food = Food(context)
     private var timer: Int = 0
 
     init {
@@ -58,6 +59,8 @@ class Game(private val context: CanvasRenderingContext2D) {
         context.clearRect(0.0, 0.0, GAME_WIDTH, GAME_HEIGHT)
         update()
         draw()
+
+        food.getRandomPosition()
 
         isLooped = true
         //window.requestAnimationFrame { run { loop() } }

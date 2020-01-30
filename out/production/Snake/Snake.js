@@ -4,6 +4,10 @@ if (typeof kotlin === 'undefined') {
 var Snake = function (_, Kotlin) {
   'use strict';
   var Kind_CLASS = Kotlin.Kind.CLASS;
+  var IntRange = Kotlin.kotlin.ranges.IntRange;
+  var shuffled = Kotlin.kotlin.collections.shuffled_7wnvza$;
+  var first = Kotlin.kotlin.collections.first_2p1efm$;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var Unit = Kotlin.kotlin.Unit;
   var throwCCE = Kotlin.throwCCE;
@@ -21,12 +25,32 @@ var Snake = function (_, Kotlin) {
     simpleName: 'Body',
     interfaces: []
   };
+  function Food(context) {
+    this.context_0 = context;
+    this.x = 0.0;
+    this.y = 0.0;
+  }
+  Food.prototype.getRandomPosition = function () {
+    var randomX = first(shuffled(new IntRange(0, 39))) * Head$Companion_getInstance().SIZE;
+    var randomY = first(shuffled(new IntRange(0, 29))) * Head$Companion_getInstance().SIZE;
+    println('randomY: ' + randomX);
+    println('randomY: ' + randomY);
+  };
+  Food.prototype.draw = function () {
+    this.context_0.fillRect(this.x, this.y, Head$Companion_getInstance().SIZE, Head$Companion_getInstance().SIZE);
+  };
+  Food.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Food',
+    interfaces: []
+  };
   function Game(context) {
     Game$Companion_getInstance();
     this.context_0 = context;
     this.state = '';
     this.isLooped_0 = false;
     this.head_0 = new Head(this.context_0);
+    this.food_0 = new Food(this.context_0);
     this.timer_0 = 0;
     window.addEventListener('keydown', Game_init$lambda(this));
     window.addEventListener('keyup', Game_init$lambda_0(this));
@@ -81,6 +105,7 @@ var Snake = function (_, Kotlin) {
     this.context_0.clearRect(0.0, 0.0, GAME_WIDTH, GAME_HEIGHT);
     this.update_0();
     this.draw_0();
+    this.food_0.getRandomPosition();
     this.isLooped_0 = true;
   };
   Game.prototype.update_0 = function () {
@@ -209,6 +234,7 @@ var Snake = function (_, Kotlin) {
     new Game(context);
   }
   _.Body = Body;
+  _.Food = Food;
   Object.defineProperty(Game, 'Companion', {
     get: Game$Companion_getInstance
   });
