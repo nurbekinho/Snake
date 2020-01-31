@@ -61,6 +61,7 @@ class Game(private val context: CanvasRenderingContext2D) {
         draw()
 
         food.getRandomPosition()
+        food.draw()
 
         isLooped = true
         //window.requestAnimationFrame { run { loop() } }

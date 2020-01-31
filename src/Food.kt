@@ -8,8 +8,8 @@ class Food(private val context: CanvasRenderingContext2D) {
         val randomX = (0..((GAME_WIDTH - Head.SIZE)/Head.SIZE).toInt()).shuffled().first() * Head.SIZE
         val randomY = (0..((GAME_HEIGHT - Head.SIZE)/Head.SIZE).toInt()).shuffled().first() * Head.SIZE
 
-        println("randomY: $randomX")
-        println("randomY: $randomY")
+        x = randomX
+        y = randomY
     }
 
     fun draw() {

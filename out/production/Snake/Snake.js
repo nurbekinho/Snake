@@ -7,7 +7,6 @@ var Snake = function (_, Kotlin) {
   var IntRange = Kotlin.kotlin.ranges.IntRange;
   var shuffled = Kotlin.kotlin.collections.shuffled_7wnvza$;
   var first = Kotlin.kotlin.collections.first_2p1efm$;
-  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var Unit = Kotlin.kotlin.Unit;
   var throwCCE = Kotlin.throwCCE;
@@ -33,8 +32,8 @@ var Snake = function (_, Kotlin) {
   Food.prototype.getRandomPosition = function () {
     var randomX = first(shuffled(new IntRange(0, 39))) * Head$Companion_getInstance().SIZE;
     var randomY = first(shuffled(new IntRange(0, 29))) * Head$Companion_getInstance().SIZE;
-    println('randomY: ' + randomX);
-    println('randomY: ' + randomY);
+    this.x = randomX;
+    this.y = randomY;
   };
   Food.prototype.draw = function () {
     this.context_0.fillRect(this.x, this.y, Head$Companion_getInstance().SIZE, Head$Companion_getInstance().SIZE);
@@ -106,6 +105,7 @@ var Snake = function (_, Kotlin) {
     this.update_0();
     this.draw_0();
     this.food_0.getRandomPosition();
+    this.food_0.draw();
     this.isLooped_0 = true;
   };
   Game.prototype.update_0 = function () {
