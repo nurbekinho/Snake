@@ -33,7 +33,7 @@ class Game(private val context: CanvasRenderingContext2D) {
         context.fillStyle = "black"
         context.textAlign = CanvasTextAlign.CENTER
         context.fillText(
-                "Press [Space Bar] To Start The Game",
+                "Press [Space Bar] To Start The Game!",
                 GAME_WIDTH / 2,
                 GAME_HEIGHT / 2
         )
