@@ -17,6 +17,7 @@ class Game(private val context: CanvasRenderingContext2D) {
     private var isLooped = false
     private val head = Head(context)
     private var food = Food(context)
+    private val collisionController = CollisionController(head, food)
     private var timer: Int = 0
 
     init {

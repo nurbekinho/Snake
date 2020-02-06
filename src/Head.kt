@@ -10,8 +10,8 @@ class Head(private val context: CanvasRenderingContext2D) {
     }
 
     private val speed = SIZE
-    private var x = 0.0
-    private var y = 0.0
+    var x = 0.0
+    var y = 0.0
     private var direction = RIGHT
 
     fun changeDirection(keyCode: Int) {
