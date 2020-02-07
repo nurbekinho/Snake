@@ -4,6 +4,7 @@ if (typeof kotlin === 'undefined') {
 var Snake = function (_, Kotlin) {
   'use strict';
   var Kind_CLASS = Kotlin.Kind.CLASS;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var IntRange = Kotlin.kotlin.ranges.IntRange;
   var shuffled = Kotlin.kotlin.collections.shuffled_7wnvza$;
   var first = Kotlin.kotlin.collections.first_2p1efm$;
@@ -22,6 +23,20 @@ var Snake = function (_, Kotlin) {
   Body.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Body',
+    interfaces: []
+  };
+  function CollisionController(head, food) {
+    this.head_0 = head;
+    this.food_0 = food;
+  }
+  CollisionController.prototype.update = function () {
+    if (this.head_0.x === this.food_0.x && this.head_0.y === this.food_0.y) {
+      println('food has been eaten');
+    }
+  };
+  CollisionController.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'CollisionController',
     interfaces: []
   };
   function Food(context) {
@@ -50,6 +65,7 @@ var Snake = function (_, Kotlin) {
     this.isLooped_0 = false;
     this.head_0 = new Head(this.context_0);
     this.food_0 = new Food(this.context_0);
+    this.collisionController_0 = new CollisionController(this.head_0, this.food_0);
     this.timer_0 = 0;
     window.addEventListener('keydown', Game_init$lambda(this));
     window.addEventListener('keyup', Game_init$lambda_0(this));
@@ -79,7 +95,7 @@ var Snake = function (_, Kotlin) {
     this.context_0.font = '30px Arial';
     this.context_0.fillStyle = 'black';
     this.context_0.textAlign = 'center';
-    this.context_0.fillText('Press [Space Bar] To Start The Game', GAME_WIDTH / 2, GAME_HEIGHT / 2);
+    this.context_0.fillText('Press [Space Bar] To Start The Game!', GAME_WIDTH / 2, GAME_HEIGHT / 2);
   };
   function Game$start$lambda(this$Game) {
     return function () {
@@ -149,8 +165,8 @@ var Snake = function (_, Kotlin) {
     Head$Companion_getInstance();
     this.context_0 = context;
     this.speed_0 = Head$Companion_getInstance().SIZE;
-    this.x_0 = 0.0;
-    this.y_0 = 0.0;
+    this.x = 0.0;
+    this.y = 0.0;
     this.direction_0 = Head$Companion_getInstance().RIGHT;
   }
   function Head$Companion() {
@@ -196,29 +212,29 @@ var Snake = function (_, Kotlin) {
   Head.prototype.update = function () {
     switch (this.direction_0) {
       case 'left':
-        this.x_0 -= this.speed_0;
+        this.x -= this.speed_0;
         break;
       case 'up':
-        this.y_0 -= this.speed_0;
+        this.y -= this.speed_0;
         break;
       case 'right':
-        this.x_0 += this.speed_0;
+        this.x += this.speed_0;
         break;
       case 'down':
-        this.y_0 += this.speed_0;
+        this.y += this.speed_0;
         break;
     }
-    if (this.x_0 < 0)
-      this.x_0 = GAME_WIDTH - Head$Companion_getInstance().SIZE;
-    else if (this.x_0 > GAME_WIDTH)
-      this.x_0 = 0.0;
-    if (this.y_0 < 0)
-      this.y_0 = GAME_HEIGHT - Head$Companion_getInstance().SIZE;
-    else if (this.y_0 > GAME_HEIGHT - Head$Companion_getInstance().SIZE)
-      this.y_0 = 0.0;
+    if (this.x < 0)
+      this.x = GAME_WIDTH - Head$Companion_getInstance().SIZE;
+    else if (this.x > GAME_WIDTH)
+      this.x = 0.0;
+    if (this.y < 0)
+      this.y = GAME_HEIGHT - Head$Companion_getInstance().SIZE;
+    else if (this.y > GAME_HEIGHT - Head$Companion_getInstance().SIZE)
+      this.y = 0.0;
   };
   Head.prototype.draw = function () {
-    this.context_0.fillRect(this.x_0, this.y_0, Head$Companion_getInstance().SIZE, Head$Companion_getInstance().SIZE);
+    this.context_0.fillRect(this.x, this.y, Head$Companion_getInstance().SIZE, Head$Companion_getInstance().SIZE);
   };
   Head.$metadata$ = {
     kind: Kind_CLASS,
@@ -234,6 +250,7 @@ var Snake = function (_, Kotlin) {
     new Game(context);
   }
   _.Body = Body;
+  _.CollisionController = CollisionController;
   _.Food = Food;
   Object.defineProperty(Game, 'Companion', {
     get: Game$Companion_getInstance
