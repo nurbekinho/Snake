@@ -70,6 +70,7 @@ class Game(private val context: CanvasRenderingContext2D) {
 
     private fun update() {
         head.update()
+        collisionController.update()
     }
 
     private fun draw() {
