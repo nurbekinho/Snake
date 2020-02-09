@@ -61,7 +61,8 @@ class Game(private val context: CanvasRenderingContext2D) {
         update()
         draw()
 
-        food.getRandomPosition()
+        // TODO()
+        //food.getRandomPosition()
         food.draw()
 
         isLooped = true
