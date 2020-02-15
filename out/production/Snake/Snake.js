@@ -120,12 +120,12 @@ var Snake = function (_, Kotlin) {
     this.context_0.clearRect(0.0, 0.0, GAME_WIDTH, GAME_HEIGHT);
     this.update_0();
     this.draw_0();
-    this.food_0.getRandomPosition();
     this.food_0.draw();
     this.isLooped_0 = true;
   };
   Game.prototype.update_0 = function () {
     this.head_0.update();
+    this.collisionController_0.update();
   };
   Game.prototype.draw_0 = function () {
     this.head_0.draw();
