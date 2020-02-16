@@ -61,10 +61,6 @@ class Game(private val context: CanvasRenderingContext2D) {
         update()
         draw()
 
-        // TODO()
-        //food.getRandomPosition()
-        food.draw()
-
         isLooped = true
         //window.requestAnimationFrame { run { loop() } }
     }
@@ -72,10 +68,14 @@ class Game(private val context: CanvasRenderingContext2D) {
     private fun update() {
         head.update()
         collisionController.update()
+        if (collisionController.isFoodEaten) {
+            food.getRandomPosition()
+        }
     }
 
     private fun draw() {
         head.draw()
+        food.draw()
     }
 
     private fun onKeyDown(event: Event) {

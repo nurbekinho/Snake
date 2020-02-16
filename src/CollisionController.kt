@@ -1,7 +1,7 @@
 class CollisionController (private val head: Head, private val food: Food) {
+    var isFoodEaten = false
+
     fun update() {
-        if (head.x == food.x && head.y == food.y) {
-            println("food has been eaten")
-        }
+        isFoodEaten = (head.x == food.x && head.y == food.y)
     }
 }
